@@ -1,0 +1,71 @@
+﻿@model PartyInvites.Models.guestResponse
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Thanks</title>
+    <link href="@Url.Content("~/Content/bootstrap.css")" rel="stylesheet" type="text/css" />
+
+    <style>
+        body {
+            background-color: #F1F1F1;
+        }
+    </style> 
+</head>
+
+
+<body>
+
+    @{
+        try {
+
+            WebMail.SmtpPort = 587; 
+                      
+            
+            WebMail.SmtpServer = "smtp.gmail.com";
+           
+            WebMail.EnableSsl = true; 
+            WebMail.UserName = "Anitendra@gmail.com";
+            WebMail.Password = "staruw6J";
+            WebMail.From = "Anitendra@gmail.com";
+            WebMail.Send("party-@example.com", "RSVP Notification", Model.Name + " is " +
+                  ((Model.WillAttend ?? false) ? "" : "not")  + "attending"); } 
+      
+        
+        catch (Exception) {          
+            @:<b>Sorry - we couldn't send the email to confirm your RSVP. </b> 
+                   }   
+      }
+                  
+    <div class="text-center">
+         <h1>Thank you, @Model.Name!</h1>
+
+        <div class= "lead">
+
+            @if (Model.WillAttend == true)
+            {
+                @:It's great that you're coming. The drinks are already in the fridge!
+
+            }
+
+            else
+            {
+                @:Sorry to hear that you can't make it, but thanks for letting us know.
+
+            }
+
+        </div>       
+
+    </div>
+
+
+</body>
+
+</html>
